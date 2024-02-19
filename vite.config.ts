@@ -25,12 +25,12 @@ export default defineConfig({
       fileName: "canned-shrimp",
     },
     rollupOptions: {
-      external: ["vue", "pixi-js", "matter-js"],
+      external: ["vue", "pixi.js", "matter-js"],
       output: {
         globals: {
           "vue": "vue",
-          "pixi-js": "PIXI",
-          "matter-js": "Matter",
+          "pixi.js": "pixi.js",
+          "matter-js": "matter-js",
         },
       },
     },

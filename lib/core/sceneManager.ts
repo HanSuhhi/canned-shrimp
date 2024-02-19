@@ -1,10 +1,9 @@
-import { Application } from "pixi.js";
+import * as PIXI from "pixi.js";
 import { ref } from "vue";
 import { useAssetLoader } from "./assetLoader";
 import { coreStore } from "./core-store";
 import { defineMatter } from "./matter";
 import type { Scene } from "./types/scene";
-import { useImportModule } from "@/utils/glob";
 import { Debug } from "@/utils/console";
 import { stopOnResizeWatch } from "@/composables/core";
 
@@ -38,10 +37,8 @@ function defineSceneRemover() {
 }
 
 function defineSceneCreator() {
-  const scenes = useImportModule<() => Scene>(import.meta.glob("/src/scenes/**/*.scene.ts", { eager: true }), true);
-
   createScene = async (scene_name: string | number) => {
-    const scene = scenes[scene_name]();
+    const scene = coreStore.scenes[scene_name]();
     scene_instances[scene_name] = scene;
 
     if (scene.load) await scene.load();
@@ -51,10 +48,11 @@ function defineSceneCreator() {
 }
 
 function definePixiApp() {
-  coreStore.app = new Application({
+  const app = new PIXI.Application({
     view: canvas_node.value,
     ...coreStore.pixiApplicationOptions,
   });
+  coreStore.app = app;
   // eslint-disable-next-line ts/ban-ts-comment
   // @ts-expect-error
   globalThis.__PIXI_APP__ = coreStore.app;

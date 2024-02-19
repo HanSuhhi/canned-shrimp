@@ -6,6 +6,7 @@ import { setup } from "@/core/setup";
 createApp(App).mount("#app");
 
 setup({
+  scenes: import.meta.glob("./scenes/**/*.scene.ts", { eager: true }),
   defaultScene: Scenes.Init,
   pixiAppConfig: {
     autoDensity: true,
