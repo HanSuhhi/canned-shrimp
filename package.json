@@ -20,7 +20,8 @@
     "cz": "git-cz",
     "build": "vue-tsc && vite build",
     "types": "esno scripts/types.script.ts",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "changelog": "pnpm exec changeset"
   },
   "dependencies": {
     "@pixi/sound": "^5.2.2",

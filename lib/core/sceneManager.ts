@@ -28,10 +28,16 @@ function defineSceneRemover() {
 
     const scene = coreStore.scene;
 
+    // if children have close function, run it.
+    scene.children.forEach(async (child: any) => {
+      if (child.close) await child.close();
+    });
+
     if (destory) destoryScene(coreStore.scene);
     else removeStateScene(coreStore.scene);
 
     if (scene.unload) await scene.unload();
+
     stopOnResizeWatch();
   };
 }

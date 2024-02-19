@@ -19,6 +19,7 @@ export function defineGameMap() {
 
   const close = () => {
     map.children.forEach(block => (block as Block).close());
+    console.log("close");
   };
 
   return Object.assign(map, {

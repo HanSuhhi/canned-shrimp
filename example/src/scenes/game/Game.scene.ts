@@ -57,10 +57,5 @@ export default function () {
     });
   };
 
-  scene.unload = () => {
-    snake.close();
-    map.close();
-  };
-
   return scene;
 }
