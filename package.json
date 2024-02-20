@@ -1,6 +1,6 @@
 {
   "name": "canned-shrimp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "files": [
     "dist"
@@ -22,8 +22,9 @@
     "types": "esno scripts/types.script.ts",
     "preview": "vite preview",
     "changelog": "pnpm exec changeset",
-    "version": "pnpm exec changeset version",
-    "publish": "pnpm exec changeset publish"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "@pixi/sound": "^5.2.2",
@@ -48,6 +49,7 @@
     "typescript": "^5.2.2",
     "vite": "^5.1.0",
     "vite-plugin-dts": "^3.7.2",
+    "vitepress": "1.0.0-rc.44",
     "vue-tsc": "^1.8.27"
   },
   "config": {
