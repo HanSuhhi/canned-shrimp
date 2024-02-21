@@ -1,8 +1,7 @@
 import type { Application } from "pixi.js";
 import type { KeyboardEventKey } from "./types/keyboard";
-import type { Scene } from "./types/scene";
+import type { Scene, SceneCreator } from "./types/scene";
 import type { SetupOption } from "./types/setup";
-import { useImportModule } from "@/utils/glob";
 
 class CoreStore {
   private _actionKey: Record<string, KeyboardEventKey | KeyboardEventKey[]> = {};
@@ -37,14 +36,14 @@ class CoreStore {
   public pixiApplicationOptions?: SetupOption["pixiAppConfig"];
 
   // scenes
-  private _scenes: Record<string, () => Scene> = {};
-  public get scenes(): Record<string, () => Scene> {
-    return this._scenes;
-  }
+  public scenes: Record<string, SceneCreator> = {};
+  // assetfiles
+  public assetFiles: string[] = [];
 
-  public set scenes(value: Record<string, () => Scene>) {
-    this._scenes = useImportModule<() => Scene>(value, true);
-  }
+  // features
+  public features: SetupOption["features"] = {
+    matterJs: false,
+  };
 }
 
 const coreStore = new CoreStore();

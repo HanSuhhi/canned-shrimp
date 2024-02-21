@@ -2,9 +2,7 @@ import { defineScene, switchScene } from "canned-shrimp";
 import { Text } from "pixi.js";
 import { Scenes } from "../../scenes.enum";
 
-export default function () {
-  const scene = defineScene(Scenes.Init);
-
+export default defineScene(Scenes.Init, (scene) => {
   const title = new Text("Loading", { fill: "white" });
 
   scene.load = async () => {
@@ -14,6 +12,4 @@ export default function () {
   scene.start = async () => {
     switchScene(Scenes.Menu);
   };
-
-  return scene;
-}
+});

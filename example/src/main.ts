@@ -7,7 +7,6 @@ import { GAME_MAP_X, GAME_MAP_Y } from "./utils/var";
 import { SnakeDirection } from "./prefabs/snake/snake.enum";
 
 setup({
-  scenes: import.meta.glob("./scenes/**/*.scene.ts", { eager: true }),
   defaultScene: Scenes.Init,
   pixiAppConfig: {
     autoDensity: true,

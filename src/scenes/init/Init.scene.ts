@@ -3,9 +3,7 @@ import { Scenes } from "../../scenes.enum";
 import { defineScene } from "@/core/scene";
 import { switchScene } from "@/main";
 
-export default function () {
-  const scene = defineScene(Scenes.Init);
-
+export default defineScene(Scenes.Init, (scene) => {
   const title = Object.assign(new Text("Loading", { fill: "white" }), {
     close() {
       // eslint-disable-next-line no-console
@@ -20,6 +18,4 @@ export default function () {
   scene.start = async () => {
     switchScene(Scenes.Game);
   };
-
-  return scene;
-}
+});

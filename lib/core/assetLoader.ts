@@ -1,4 +1,5 @@
 import { Assets } from "pixi.js";
+import { coreStore } from "./core-store";
 
 interface Asset {
   name: string;
@@ -8,17 +9,11 @@ interface Asset {
   group: string;
 }
 
-function importAssetFiles() {
-  const asset_files = import.meta.glob(["/public/**/*.*", "!/public/vite.svg", "!/public/bitmap-font/*.*"]);
-
-  return Object.keys(asset_files);
-}
-
-function createManifest(asset_file_urls: ReturnType<typeof importAssetFiles>) {
+function createManifest() {
   const assetsManifest: Asset[] = [];
   const assetPathRegexp = /public\/(?<group>[\w.-]+)\/(?<category>[\w.-]+)\/(?<name>[\w.-]+)\.(?<ext>\w+)$/;
 
-  asset_file_urls.forEach((assetPath) => {
+  coreStore.assetFiles.forEach((assetPath) => {
     const match = assetPathRegexp.exec(assetPath);
 
     if (!match || !match.groups) {
@@ -49,8 +44,7 @@ function createManifest(asset_file_urls: ReturnType<typeof importAssetFiles>) {
 }
 
 export function useAssetLoader() {
-  const asset_file_urls = importAssetFiles();
-  const manifest = createManifest(asset_file_urls);
+  const manifest = createManifest();
 
   async function loadAssetsGroup<T>(group: T) {
     const sceneAssets = manifest.filter(asset => asset.group === group);

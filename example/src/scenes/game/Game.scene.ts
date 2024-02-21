@@ -15,9 +15,7 @@ const { dialog } = createDiscreteApi(
   },
 );
 
-export default function () {
-  const scene = defineScene(Scenes.Game);
-
+export default defineScene(Scenes.Game, (scene) => {
   let snake: Snake;
   let gold: Gold;
   let map: GameMap;
@@ -56,6 +54,4 @@ export default function () {
       }
     });
   };
-
-  return scene;
-}
+});

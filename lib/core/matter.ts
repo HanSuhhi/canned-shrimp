@@ -1,9 +1,10 @@
 import { Engine, Mouse, MouseConstraint, Runner, World } from "matter-js";
 import { Debug } from "@/utils/console";
 
-const engine = Engine.create();
-
+let engine: Engine;
 export function useMatter() {
+  engine = Engine.create();
+
   return { engine };
 }
 

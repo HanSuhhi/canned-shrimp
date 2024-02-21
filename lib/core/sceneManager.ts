@@ -2,8 +2,8 @@ import * as PIXI from "pixi.js";
 import { ref } from "vue";
 import { useAssetLoader } from "./assetLoader";
 import { coreStore } from "./core-store";
-import { defineMatter } from "./matter";
 import type { Scene } from "./types/scene";
+import { defineMatter } from "./matter";
 import { Debug } from "@/utils/console";
 import { stopOnResizeWatch } from "@/composables/core";
 
@@ -44,7 +44,7 @@ function defineSceneRemover() {
 
 function defineSceneCreator() {
   createScene = async (scene_name: string | number) => {
-    const scene = coreStore.scenes[scene_name]();
+    const scene = await coreStore.scenes[scene_name]();
     scene_instances[scene_name] = scene;
 
     if (scene.load) await scene.load();
@@ -81,7 +81,7 @@ export async function createDefaultApp(canvas: HTMLCanvasElement) {
   if (canvas_node.value || scene_manager) return;
   canvas_node.value = canvas;
   definePixiApp();
-  defineMatter(canvas_node.value);
+  if (coreStore.features?.matterJs) defineMatter(canvas_node.value);
   scene_manager = await defineSceneManager();
 
   switchScene(coreStore.defaultScene);
