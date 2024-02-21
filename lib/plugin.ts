@@ -1,6 +1,4 @@
-import type { Plugin } from "vite";
-
-export function cannedShrimp(): Plugin {
+export function cannedShrimp() {
   return {
     name: "rollup-plugin-vue-canned-shrimp",
     transform(code, id) {

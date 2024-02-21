@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { cannedShrimp } from "../dist/plugin";
+import { cannedShrimp } from "canned-shrimp/plugin";
 
 export default defineConfig({
   plugins: [vue(), cannedShrimp()],

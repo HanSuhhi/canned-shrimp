@@ -20,7 +20,7 @@ export default defineConfig({
   build: {
     outDir: "dist",
     lib: {
-      entry: resolve(__dirname, "lib", "main.ts"),
+      entry: [resolve(__dirname, "lib", "main.ts"), resolve(__dirname, "lib", "plugin.ts")],
       name: "CannedShrimp",
       fileName: "canned-shrimp",
     },

@@ -1,6 +1,6 @@
 {
   "name": "canned-shrimp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "files": [
     "dist"
@@ -12,7 +12,12 @@
     ".": {
       "types": "./dist/main.d.ts",
       "import": "./dist/canned-shrimp.js",
-      "require": "./dist/canned-shrimp.umd.cjs"
+      "require": "./dist/canned-shrimp.cjs"
+    },
+    "./plugin": {
+      "types": "./dist/plugin.d.ts",
+      "import": "./dist/canned-shrimp2.js",
+      "require": "./dist/canned-shrimp2.cjs"
     }
   },
   "scripts": {
