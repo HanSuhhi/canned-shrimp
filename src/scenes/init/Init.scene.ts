@@ -1,15 +1,10 @@
-import { Text } from "pixi.js";
+import { createTitlePrefab } from "../../prefabs/title.prefab";
 import { Scenes } from "../../scenes.enum";
 import { defineScene } from "@/core/scene";
 import { switchScene } from "@/main";
 
 export default defineScene(Scenes.Init, (scene) => {
-  const title = Object.assign(new Text("Loading", { fill: "white" }), {
-    close() {
-      // eslint-disable-next-line no-console
-      console.log("close is triggered");
-    },
-  });
+  const title = createTitlePrefab("Loading");
 
   scene.load = async () => {
     scene.addChild(title);
