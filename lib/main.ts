@@ -5,5 +5,5 @@ export * from "@/core/keyboard";
 export * from "@/core/matter";
 export * from "@/core/scene";
 export * from "@/core/sceneManager";
-export * from "@/core/setup";
 export * from "@/core/spritesheetAnimation";
+export * from "@/core/vue-plugin";
