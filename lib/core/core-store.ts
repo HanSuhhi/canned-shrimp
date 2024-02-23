@@ -2,6 +2,7 @@ import type { Application } from "pixi.js";
 import type { KeyboardEventKey } from "./types/keyboard";
 import type { Scene, SceneCreator } from "./types/scene";
 import type { SetupOption } from "./types/setup";
+import type { SceneManager } from "./sceneManager";
 
 class CoreStore {
   private _actionKey: Record<string, KeyboardEventKey | KeyboardEventKey[]> = {};
@@ -44,6 +45,11 @@ class CoreStore {
   public features: SetupOption["features"] = {
     matterJs: false,
   };
+
+  // sceneManager
+  public sceneManager?: SceneManager;
+  // canvasNode
+  public canvasNode?: HTMLCanvasElement;
 }
 
 const coreStore = new CoreStore();

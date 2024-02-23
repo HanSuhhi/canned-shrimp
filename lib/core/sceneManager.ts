@@ -1,16 +1,9 @@
-import * as PIXI from "pixi.js";
-import { ref } from "vue";
 import { useAssetLoader } from "./assetLoader";
 import { coreStore } from "./core-store";
 import type { Scene } from "./types/scene";
-import { defineMatter } from "./matter";
 import { Debug } from "@/utils/console";
 import { stopOnResizeWatch } from "@/composables/core";
 
-let scene_manager: Awaited<ReturnType<typeof defineSceneManager>>;
-let createScene: (scene_name: string | number) => Promise<Scene>;
-let removeCurrentScene: (destory?: boolean) => Promise<void>;
-const canvas_node = ref<HTMLCanvasElement>();
 const scene_instances: Record<string, Scene> = {};
 
 function defineSceneRemover() {
@@ -23,7 +16,7 @@ function defineSceneRemover() {
     coreStore.app?.stage.removeChild(scene);
   }
 
-  removeCurrentScene = async (destory: boolean = true) => {
+  return async (destory: boolean = true) => {
     if (!coreStore.scene) return;
 
     const scene = coreStore.scene;
@@ -43,7 +36,7 @@ function defineSceneRemover() {
 }
 
 function defineSceneCreator() {
-  createScene = async (scene_name: string | number) => {
+  return async (scene_name: string | number) => {
     const scene = await coreStore.scenes[scene_name]();
     scene_instances[scene_name] = scene;
 
@@ -53,48 +46,26 @@ function defineSceneCreator() {
   };
 }
 
-function definePixiApp() {
-  const app = new PIXI.Application({
-    view: canvas_node.value,
-    ...coreStore.pixiApplicationOptions,
-  });
-  coreStore.app = app;
-  // eslint-disable-next-line ts/ban-ts-comment
-  // @ts-expect-error
-  globalThis.__PIXI_APP__ = coreStore.app;
-}
+export async function defineSceneManager() {
+  if (!coreStore.canvasNode) throw new Error("Failed to find canvas element");
 
-async function defineSceneManager() {
-  if (!canvas_node.value) throw new Error("Failed to find canvas element");
-
-  Debug("Pixi application created");
-
-  defineSceneRemover();
-  defineSceneCreator();
+  const removeCurrentScene = defineSceneRemover();
+  const createScene = defineSceneCreator();
 
   Debug("Everything is ready to go.");
 
   return { removeCurrentScene, createScene };
 }
 
-export async function createDefaultApp(canvas: HTMLCanvasElement) {
-  if (canvas_node.value || scene_manager) return;
-  canvas_node.value = canvas;
-  definePixiApp();
-  if (coreStore.features?.matterJs) defineMatter(canvas_node.value);
-  scene_manager = await defineSceneManager();
-
-  switchScene(coreStore.defaultScene);
-};
-
 export async function switchScene(scene_name: string | number, load_asset = true) {
-  await removeCurrentScene();
+  if (!coreStore.sceneManager) throw new Error("sceneManager is not initialized.");
+  await coreStore.sceneManager.removeCurrentScene();
   if (load_asset) {
     const { loadAssetsGroup } = useAssetLoader();
     await loadAssetsGroup(scene_name);
   }
 
-  const currentScene = (scene_instances[scene_name] || await createScene(scene_name));
+  const currentScene = (scene_instances[scene_name] || await coreStore.sceneManager.createScene(scene_name));
 
   if (!currentScene) throw new Error(`Failed to initialize scene: ${scene_name}`);
 
@@ -104,3 +75,5 @@ export async function switchScene(scene_name: string | number, load_asset = true
 
   return currentScene;
 }
+
+export type SceneManager = Awaited<ReturnType<typeof defineSceneManager>>;
