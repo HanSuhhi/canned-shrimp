@@ -27,7 +27,7 @@ function useSnakeMap() {
   return { contains, init };
 }
 
-function useSnakeMove({ contains }: ReturnType<typeof useSnakeMap>, { state }: ReturnType<typeof useSnakeState>) {
+function useSnakeMove({ contains }: ReturnType<typeof useSnakeMap>, { state, deadReason }: ReturnType<typeof useSnakeState>) {
   let direction: SnakeDirection = SnakeDirection.Right;
 
   function move() {
@@ -52,8 +52,16 @@ function useSnakeMove({ contains }: ReturnType<typeof useSnakeMap>, { state }: R
       default: throw new Error("unknown direction");
     }
 
-    if (targetPosition[0] > GAME_MAP_X_LENGTH - 1 || targetPosition[0] < 0 || targetPosition[1] > GAME_MAP_Y_LENGTH - 1 || targetPosition[1] < 0) return state.value = SnakeState.Dead;
-    if (contains.some(item => isEqual(targetPosition, item))) return state.value = SnakeState.Dead;
+    if (targetPosition[0] > GAME_MAP_X_LENGTH - 1 || targetPosition[0] < 0 || targetPosition[1] > GAME_MAP_Y_LENGTH - 1 || targetPosition[1] < 0) {
+      state.value = SnakeState.Dead
+      deadReason.value = "Touched the boundary!"
+      return
+    };
+    if (contains.some(item => isEqual(targetPosition, item))) {
+      state.value = SnakeState.Dead;
+      deadReason.value = "Attacked self!"
+      return;
+    }
 
     contains.push(targetPosition);
     const targetBlock = gameMap.getChildByName(createBlockName(targetPosition)) as Block;
@@ -91,6 +99,7 @@ export function defineSnake() {
     contains: snakeMap.contains,
     init: snakeMap.init,
     state: snakeState.state,
+    deadReason: snakeState.deadReason,
     move,
     close,
   });

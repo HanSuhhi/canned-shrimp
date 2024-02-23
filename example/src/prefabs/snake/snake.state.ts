@@ -7,6 +7,7 @@ export enum SnakeState {
 
 export function useSnakeState() {
   const state = ref<SnakeState>(SnakeState.Alive);
+  const deadReason = ref("");
 
-  return { state };
+  return { state, deadReason };
 }

@@ -42,8 +42,9 @@ export default defineScene(Scenes.Game, (scene) => {
       if (newState === SnakeState.Dead) {
         off();
         stopWatch();
-        dialog.info({
+        dialog.warning({
           title: "Game Over ~",
+          content: snake.deadReason.value,
           positiveText: "Back",
           closable: false,
           maskClosable: false,
