@@ -1,4 +1,5 @@
 import type { Application } from "pixi.js";
+import { SceneLifecycle } from "../enum";
 import type { KeyboardEventKey } from "./types/keyboard";
 import type { Scene, SceneCreator } from "./types/scene";
 import type { SetupOption } from "./types/setup";
@@ -68,6 +69,23 @@ class LibStore {
   public sceneManager?: SceneManager;
   // canvasNode
   public canvasNode?: HTMLCanvasElement;
+
+  // scene lifecycle
+  public sceneLifeCycle: Record<SceneLifecycle, Array<(scene: Scene) => any>> = {
+    [SceneLifecycle.onCreated]: [],
+    [SceneLifecycle.onDestory]: [],
+    [SceneLifecycle.onHide]: [],
+    [SceneLifecycle.onLoad]: [],
+  };
+
+  public resetSceneLifeCycle() {
+    this.sceneLifeCycle = {
+      [SceneLifecycle.onCreated]: [],
+      [SceneLifecycle.onDestory]: [],
+      [SceneLifecycle.onHide]: [],
+      [SceneLifecycle.onLoad]: [],
+    };
+  }
 }
 
 export { CoreStore, LibStore };

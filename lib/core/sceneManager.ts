@@ -3,46 +3,30 @@ import type { Scene } from "./types/scene";
 import { CoreStore, LibStore } from "./store";
 import { Debug } from "@/utils/console";
 import { stopOnResizeWatch } from "@/composables/core";
+import { SceneState } from "@/enum";
 
 const scene_instances: Record<string, Scene> = {};
 
 function defineSceneRemover() {
   async function destoryScene(scene: Scene) {
+    scene.state.value = SceneState.Destory;
     delete scene_instances[scene.sceneName];
     scene.destroy({ children: true });
+    stopOnResizeWatch();
   }
 
-  async function removeStateScene(scene: Scene) {
+  async function hideScene(scene: Scene) {
     CoreStore.instance.app?.stage.removeChild(scene);
+    scene.state.value = SceneState.Hide;
   }
 
-  return async (destory: boolean = true) => {
+  return async (destory = true) => {
     if (!CoreStore.instance.scene) return;
 
     const scene = CoreStore.instance.scene;
 
-    // if children have close function, run it.
-    scene.children.forEach(async (child: any) => {
-      if (child.close) await child.close();
-    });
-
-    if (destory) destoryScene(CoreStore.instance.scene);
-    else removeStateScene(CoreStore.instance.scene);
-
-    if (scene.onUnload) await scene.onUnload();
-
-    stopOnResizeWatch();
-  };
-}
-
-function defineSceneCreator() {
-  return async (scene_name: string | number) => {
-    const scene = await CoreStore.instance.scenes[scene_name]();
-    scene_instances[scene_name] = scene;
-
-    if (scene.onCreated) await scene.onCreated();
-
-    return scene;
+    if (destory) destoryScene(scene);
+    else hideScene(scene);
   };
 }
 
@@ -50,7 +34,14 @@ export async function defineSceneManager() {
   if (!LibStore.instance.canvasNode) throw new Error("Failed to find canvas element");
 
   const removeCurrentScene = defineSceneRemover();
-  const createScene = defineSceneCreator();
+  const createScene = async (scene_name: string | number) => {
+    const scene = await CoreStore.instance.scenes[scene_name]();
+    scene_instances[scene_name] = scene;
+
+    scene.state.value = SceneState.Created;
+
+    return scene;
+  };
 
   Debug("Everything is ready to go.");
 
@@ -65,13 +56,11 @@ export async function switchScene(scene_name: string | number, load_asset = true
     await loadAssetsGroup(scene_name);
   }
 
-  const currentScene = (scene_instances[scene_name] || await LibStore.instance.sceneManager.createScene(scene_name));
-
+  const currentScene = scene_instances[scene_name] || await LibStore.instance.sceneManager.createScene(scene_name);
   if (!currentScene) throw new Error(`Failed to initialize scene: ${scene_name}`);
 
   CoreStore.instance.app!.stage.addChild(currentScene);
-
-  if (currentScene.onLoad) await currentScene.onLoad();
+  currentScene.state.value = SceneState.Load;
 
   return currentScene;
 }

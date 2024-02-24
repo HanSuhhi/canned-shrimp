@@ -1,4 +1,4 @@
-import { CoreStore, defineScene, switchScene, update } from "canned-shrimp";
+import { CoreStore, defineScene, onSceneCreated, onSceneLoaded, switchScene, update } from "canned-shrimp";
 import { watch } from "vue";
 import { createDiscreteApi, darkTheme } from "naive-ui";
 import { defineSnake } from "../../prefabs/snake/Snake.prefab";
@@ -15,12 +15,12 @@ const { dialog } = createDiscreteApi(
   },
 );
 
-export default defineScene(Scenes.Game, (scene, { onLoad, onCreated }) => {
+export default defineScene(Scenes.Game, () => {
   let snake: Snake;
   let gold: Gold;
   let map: GameMap;
 
-  onCreated(async () => {
+  onSceneCreated(async (scene) => {
     snake = defineSnake();
     scene.addChildAt(snake, GameChildrenIndex.Snake);
 
@@ -31,7 +31,7 @@ export default defineScene(Scenes.Game, (scene, { onLoad, onCreated }) => {
     scene.addChildAt(map, GameChildrenIndex.Map);
   });
 
-  onLoad(async () => {
+  onSceneLoaded(async () => {
     snake.init();
     gold.createNewGold();
 

@@ -1,16 +1,16 @@
 import { createTitlePrefab } from "../../prefabs/title.prefab";
 import { Scenes } from "../../scenes.enum";
 import { switchScene } from "@/main";
-import { defineScene } from "@/core/scene";
+import { defineScene, onSceneCreated, onSceneLoaded } from "@/core/scene";
 
-export default defineScene(Scenes.Init, (scene, { onCreated, onLoad }) => {
+export default defineScene(Scenes.Init, () => {
   const title = createTitlePrefab("Loading");
 
-  onCreated(() => {
+  onSceneCreated((scene) => {
     scene.addChild(title);
   });
 
-  onLoad(() => {
-    switchScene(Scenes.Game);
+  onSceneLoaded(() => {
+    switchScene(Scenes.Menu);
   });
 });

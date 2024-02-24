@@ -1,15 +1,15 @@
-import { defineScene, switchScene } from "canned-shrimp";
+import { defineScene, onSceneCreated, onSceneLoaded, switchScene } from "canned-shrimp";
 import { Text } from "pixi.js";
 import { Scenes } from "../../scenes.enum";
 
-export default defineScene(Scenes.Init, (scene, { onLoad, onCreated }) => {
+export default defineScene(Scenes.Init, () => {
   const title = new Text("Loading", { fill: "white" });
 
-  onCreated(async () => {
+  onSceneCreated(async (scene) => {
     scene.addChild(title);
   });
 
-  onLoad(async () => {
+  onSceneLoaded(async () => {
     switchScene(Scenes.Menu);
   });
 });

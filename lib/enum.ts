@@ -3,9 +3,16 @@ export enum KeyEnum {
 }
 
 export enum SceneState {
-  Create,
+  Created,
   Load,
   Alive,
   Hide,
   Destory,
+}
+
+export enum SceneLifecycle {
+  onCreated = "1dem7kbbw97m",
+  onLoad = "5guvazbqszny",
+  onHide = "fsi54ugiqv15",
+  onDestory = "fl5no3759k9z",
 }

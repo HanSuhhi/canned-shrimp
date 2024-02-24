@@ -1,4 +1,6 @@
 export enum Scenes {
   Init = "Init",
-  Game = "Game",
+  Menu = "Menu",
+  A = "A",
+  B = "B",
 }
