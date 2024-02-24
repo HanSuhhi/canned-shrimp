@@ -1,4 +1,4 @@
-import { coreStore, defineContainer } from "canned-shrimp";
+import { CoreStore, defineContainer } from "canned-shrimp";
 import { isEqual, random } from "lodash-es";
 import { ref } from "vue";
 import { GAME_MAP_X_LENGTH, GAME_MAP_Y_LENGTH } from "../../utils/var";
@@ -12,8 +12,8 @@ export function defineGold() {
   const currentGoldPosition = ref<BlockPosition>();
 
   function createNewGold() {
-    const snake = coreStore.scene?.getChildAt(GameChildrenIndex.Snake) as Snake;
-    const gameMap = coreStore.scene?.getChildAt(GameChildrenIndex.Map) as GameMap;
+    const snake = CoreStore.instance.scene?.getChildAt(GameChildrenIndex.Snake) as Snake;
+    const gameMap = CoreStore.instance.scene?.getChildAt(GameChildrenIndex.Map) as GameMap;
 
     let goldPosition: BlockPosition = [random(0, GAME_MAP_X_LENGTH - 1), random(0, GAME_MAP_Y_LENGTH - 1)];
 

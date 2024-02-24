@@ -1,5 +1,5 @@
 import { Assets } from "pixi.js";
-import { coreStore } from "./core-store";
+import { CoreStore } from "./store";
 
 interface Asset {
   name: string;
@@ -13,7 +13,7 @@ function createManifest() {
   const assetsManifest: Asset[] = [];
   const assetPathRegexp = /public\/(?<group>[\w.-]+)\/(?<category>[\w.-]+)\/(?<name>[\w.-]+)\.(?<ext>\w+)$/;
 
-  coreStore.assetFiles.forEach((assetPath) => {
+  CoreStore.instance.assetFiles.forEach((assetPath) => {
     const match = assetPathRegexp.exec(assetPath);
 
     if (!match || !match.groups) {

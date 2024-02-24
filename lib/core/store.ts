@@ -5,14 +5,11 @@ import type { SetupOption } from "./types/setup";
 import type { SceneManager } from "./sceneManager";
 
 class CoreStore {
-  private _actionKey: Record<string, KeyboardEventKey | KeyboardEventKey[]> = {};
+  private static _instance: CoreStore;
 
-  public get actionKey(): Record<string, KeyboardEventKey | KeyboardEventKey[]> {
-    return this._actionKey;
-  }
-
-  public set actionKey(value: Record<string, KeyboardEventKey | KeyboardEventKey[]>) {
-    this._actionKey = value;
+  public static get instance() {
+    if (!this._instance) this._instance = new CoreStore();
+    return this._instance;
   }
 
   // app
@@ -30,16 +27,37 @@ class CoreStore {
     return this.app?.screen.width || 0;
   }
 
+  // @TODO store scenes and assetFiles are set via vite-plugin. They should not be accessible to developers.
+  // scenes
+  public scenes: Record<string, SceneCreator> = {};
+  // assetfiles
+  public assetFiles: string[] = [];
+}
+
+class LibStore {
+  private static _instance: LibStore;
+
+  public static get instance() {
+    if (!this._instance) this._instance = new LibStore();
+    return this._instance;
+  }
+
+  // action key
+  private _actionKey: Record<string, KeyboardEventKey | KeyboardEventKey[]> = {};
+
+  public get actionKey(): Record<string, KeyboardEventKey | KeyboardEventKey[]> {
+    return this._actionKey;
+  }
+
+  public set actionKey(value: Record<string, KeyboardEventKey | KeyboardEventKey[]>) {
+    this._actionKey = value;
+  }
+
   // default scene
   public defaultScene: string = "";
 
   // application options
   public pixiApplicationOptions?: SetupOption["pixiAppConfig"];
-
-  // scenes
-  public scenes: Record<string, SceneCreator> = {};
-  // assetfiles
-  public assetFiles: string[] = [];
 
   // features
   public features: SetupOption["features"] = {
@@ -52,6 +70,4 @@ class CoreStore {
   public canvasNode?: HTMLCanvasElement;
 }
 
-const coreStore = new CoreStore();
-
-export { coreStore };
+export { CoreStore, LibStore };

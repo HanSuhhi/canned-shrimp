@@ -1,4 +1,4 @@
-import { Button_State, Keyboard, coreStore, defineContainer, definePrefab } from "canned-shrimp";
+import { Button_State, CoreStore, Keyboard, defineContainer, definePrefab } from "canned-shrimp";
 import { floor, isEqual } from "lodash-es";
 import { GameChildrenIndex } from "../../scenes/game/game.enum";
 import { createBlockName } from "../../scenes/game/map";
@@ -16,7 +16,7 @@ function useSnakeMap() {
   ];
 
   function init() {
-    const gameMap = coreStore.scene?.getChildAt(GameChildrenIndex.Map) as GameMap;
+    const gameMap = CoreStore.instance.scene?.getChildAt(GameChildrenIndex.Map) as GameMap;
 
     contains.forEach((blockPosition) => {
       const block = gameMap.getChildByName(createBlockName(blockPosition)) as Block;
@@ -31,8 +31,8 @@ function useSnakeMove({ contains }: ReturnType<typeof useSnakeMap>, { state, dea
   let direction: SnakeDirection = SnakeDirection.Right;
 
   function move() {
-    const gameMap = coreStore.scene?.getChildAt(GameChildrenIndex.Map) as GameMap;
-    const goldController = coreStore.scene?.getChildAt(GameChildrenIndex.Gold) as Gold;
+    const gameMap = CoreStore.instance.scene?.getChildAt(GameChildrenIndex.Map) as GameMap;
+    const goldController = CoreStore.instance.scene?.getChildAt(GameChildrenIndex.Gold) as Gold;
     const [currentX, currentY] = contains[contains.length - 1];
 
     let targetPosition: BlockPosition;

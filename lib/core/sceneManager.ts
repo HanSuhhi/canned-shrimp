@@ -1,6 +1,6 @@
 import { useAssetLoader } from "./assetLoader";
-import { coreStore } from "./core-store";
 import type { Scene } from "./types/scene";
+import { CoreStore, LibStore } from "./store";
 import { Debug } from "@/utils/console";
 import { stopOnResizeWatch } from "@/composables/core";
 
@@ -13,21 +13,21 @@ function defineSceneRemover() {
   }
 
   async function removeStateScene(scene: Scene) {
-    coreStore.app?.stage.removeChild(scene);
+    CoreStore.instance.app?.stage.removeChild(scene);
   }
 
   return async (destory: boolean = true) => {
-    if (!coreStore.scene) return;
+    if (!CoreStore.instance.scene) return;
 
-    const scene = coreStore.scene;
+    const scene = CoreStore.instance.scene;
 
     // if children have close function, run it.
     scene.children.forEach(async (child: any) => {
       if (child.close) await child.close();
     });
 
-    if (destory) destoryScene(coreStore.scene);
-    else removeStateScene(coreStore.scene);
+    if (destory) destoryScene(CoreStore.instance.scene);
+    else removeStateScene(CoreStore.instance.scene);
 
     if (scene.onUnload) await scene.onUnload();
 
@@ -37,7 +37,7 @@ function defineSceneRemover() {
 
 function defineSceneCreator() {
   return async (scene_name: string | number) => {
-    const scene = await coreStore.scenes[scene_name]();
+    const scene = await CoreStore.instance.scenes[scene_name]();
     scene_instances[scene_name] = scene;
 
     if (scene.onCreated) await scene.onCreated();
@@ -47,7 +47,7 @@ function defineSceneCreator() {
 }
 
 export async function defineSceneManager() {
-  if (!coreStore.canvasNode) throw new Error("Failed to find canvas element");
+  if (!LibStore.instance.canvasNode) throw new Error("Failed to find canvas element");
 
   const removeCurrentScene = defineSceneRemover();
   const createScene = defineSceneCreator();
@@ -58,18 +58,18 @@ export async function defineSceneManager() {
 }
 
 export async function switchScene(scene_name: string | number, load_asset = true) {
-  if (!coreStore.sceneManager) throw new Error("sceneManager is not initialized.");
-  await coreStore.sceneManager.removeCurrentScene();
+  if (!LibStore.instance.sceneManager) throw new Error("sceneManager is not initialized.");
+  await LibStore.instance.sceneManager.removeCurrentScene();
   if (load_asset) {
     const { loadAssetsGroup } = useAssetLoader();
     await loadAssetsGroup(scene_name);
   }
 
-  const currentScene = (scene_instances[scene_name] || await coreStore.sceneManager.createScene(scene_name));
+  const currentScene = (scene_instances[scene_name] || await LibStore.instance.sceneManager.createScene(scene_name));
 
   if (!currentScene) throw new Error(`Failed to initialize scene: ${scene_name}`);
 
-  coreStore.app!.stage.addChild(currentScene);
+  CoreStore.instance.app!.stage.addChild(currentScene);
 
   if (currentScene.onLoad) await currentScene.onLoad();
 

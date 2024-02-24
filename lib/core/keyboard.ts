@@ -2,7 +2,7 @@ import { useMagicKeys } from "@vueuse/core";
 import { forEach, isEqual, lowerCase, map } from "lodash-es";
 import { utils } from "pixi.js";
 import { watch } from "vue";
-import { coreStore } from "./core-store";
+import { LibStore } from "./store";
 import type { KeyboardEventKey } from "./types/keyboard";
 
 enum Keyboard_State {
@@ -36,7 +36,7 @@ export class Keyboard extends utils.EventEmitter {
 
   public static get instance() {
     if (!this._instance) {
-      const kb = createKeyboardActionKey(coreStore.actionKey);
+      const kb = createKeyboardActionKey(LibStore.instance.actionKey);
       this._instance = new Keyboard(kb);
     }
     return this._instance;

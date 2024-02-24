@@ -6,7 +6,7 @@ export function cannedShrimp(): Plugin {
     transform(code, id) {
       if (id.includes("src/main")) {
         return {
-          code: `import { coreStore } from "canned-shrimp";
+          code: `import { CoreStore } from "canned-shrimp";
 import { mapKeys } from "lodash-es";
 
 function getFilenameFromPath(path) {
@@ -17,8 +17,8 @@ function updateFilenameFromViteGlob(_, path) {
   return getFilenameFromPath(path);
 }
 
-coreStore.scenes = mapKeys(import.meta.glob("/src/scenes/**/*.scene.ts", { eager: true, import: "default" }), updateFilenameFromViteGlob);
-coreStore.assetFiles = Object.keys(import.meta.glob(["/public/**/*.*", "!/public/vite.svg", "!/public/bitmap-font/*.*"]));
+CoreStore.instance.scenes = mapKeys(import.meta.glob("/src/scenes/**/*.scene.ts", { eager: true, import: "default" }), updateFilenameFromViteGlob);
+CoreStore.instance.assetFiles = Object.keys(import.meta.glob(["/public/**/*.*", "!/public/vite.svg", "!/public/bitmap-font/*.*"]));
 ${code}`,
         };
       }

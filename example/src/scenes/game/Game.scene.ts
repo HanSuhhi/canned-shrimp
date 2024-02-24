@@ -1,4 +1,4 @@
-import { coreStore, defineScene, switchScene, update } from "canned-shrimp";
+import { CoreStore, defineScene, switchScene, update } from "canned-shrimp";
 import { watch } from "vue";
 import { createDiscreteApi, darkTheme } from "naive-ui";
 import { defineSnake } from "../../prefabs/snake/Snake.prefab";
@@ -35,7 +35,7 @@ export default defineScene(Scenes.Game, (scene, { onLoad, onCreated }) => {
     snake.init();
     gold.createNewGold();
 
-    coreStore.app!.ticker.maxFPS = 10;
+    CoreStore.instance.app!.ticker.maxFPS = 10;
 
     const off = update(snake.move);
     const stopWatch = watch(snake.state, (newState) => {

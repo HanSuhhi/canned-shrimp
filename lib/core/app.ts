@@ -1,27 +1,27 @@
 import { Application } from "pixi.js";
-import { coreStore } from "./core-store";
 import { defineMatter } from "./matter";
 import { defineSceneManager, switchScene } from "./sceneManager";
+import { CoreStore, LibStore } from "./store";
 import { Debug } from "@/utils/console";
 
 function definePixiApp() {
   const app = new Application({
-    view: coreStore.canvasNode,
-    ...coreStore.pixiApplicationOptions,
+    view: LibStore.instance.canvasNode,
+    ...LibStore.instance.pixiApplicationOptions,
   });
-  coreStore.app = app;
+  CoreStore.instance.app = app;
   // eslint-disable-next-line ts/ban-ts-comment, ts/prefer-ts-expect-error
   // @ts-ignore
-  globalThis.__PIXI_APP__ = coreStore.app;
+  globalThis.__PIXI_APP__ = CoreStore.instance.app;
 }
 
 export async function createDefaultApp(canvas: HTMLCanvasElement) {
-  if (coreStore.canvasNode || coreStore.sceneManager) return;
-  coreStore.canvasNode = canvas;
+  if (LibStore.instance.canvasNode || LibStore.instance.sceneManager) return;
+  LibStore.instance.canvasNode = canvas;
   definePixiApp();
-  if (coreStore.features?.matterJs) defineMatter(coreStore.canvasNode);
-  coreStore.sceneManager = await defineSceneManager();
+  if (LibStore.instance.features?.matterJs) defineMatter(LibStore.instance.canvasNode);
+  LibStore.instance.sceneManager = await defineSceneManager();
   Debug("Pixi application created");
 
-  switchScene(coreStore.defaultScene);
+  switchScene(LibStore.instance.defaultScene);
 };

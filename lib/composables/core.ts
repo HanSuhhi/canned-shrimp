@@ -3,7 +3,7 @@ import type { DisplayObject } from "pixi.js";
 import { Container } from "pixi.js";
 import type { WatchOptions, WatchStopHandle } from "vue";
 import { watch } from "vue";
-import { coreStore } from "@/core/core-store";
+import { CoreStore } from "@/core/store";
 
 const watchStopHandles: WatchStopHandle[] = [];
 
@@ -18,12 +18,12 @@ export function stopOnResizeWatch() {
 }
 
 export function update(func: (ms?: number) => void) {
-  coreStore.app!.ticker.add(func);
+  CoreStore.instance.app!.ticker.add(func);
   return () => stopUpdate(func);
 }
 
 export function stopUpdate(func: (ms?: number) => void) {
-  coreStore.app!.ticker.remove(func);
+  CoreStore.instance.app!.ticker.remove(func);
 }
 
 export function defineContainer<T extends DisplayObject>(name: string) {

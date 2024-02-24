@@ -1,6 +1,6 @@
 export * from "@/composables/core";
 export * from "@/core/assetLoader";
-export * from "@/core/core-store";
+export { CoreStore } from "@/core/store";
 export * from "@/core/keyboard";
 export * from "@/core/matter";
 export * from "@/core/scene";
