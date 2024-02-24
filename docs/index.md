@@ -3,15 +3,18 @@ layout: home
 
 hero:
   name: "Canned Shrimp"
-  text: "Keep Lightweight, always be fun"
+  text: "Keep Lightweight\nalways be fun"
   tagline: A Lightweight Web Game Engine
-  # actions:
-  #   - theme: brand
-  #     text: Markdown Examples
-  #     link: /markdown-examples
-  #   - theme: alt
-  #     text: API Examples
-  #     link: /api-examples
+  actions:
+    - theme: brand
+      text: Get Start 🪙
+      link: /guide
+    - theme: alt
+      text: API Docs 📚
+      link: /guide
+    - theme: alt
+      text: Examples 🎮
+      link: /guide
 
 features:
   - title: pixi.js

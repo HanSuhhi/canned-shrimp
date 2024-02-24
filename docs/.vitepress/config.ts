@@ -1,11 +1,9 @@
 import { defineConfig } from "vitepress";
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Canned Shrimp",
   description: "Keep Lightweight, always be fun",
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
       // { text: "Examples", link: "/markdown-examples" },
@@ -24,5 +22,15 @@ export default defineConfig({
     socialLinks: [
       { icon: "github", link: "https://github.com/HanSuhhi/canned-shrimp" },
     ],
+  },
+  locales: {
+    root: {
+      label: "English",
+      lang: "en",
+    },
+    cn: {
+      label: "中文",
+      lang: "cn",
+    },
   },
 });
