@@ -1,5 +1,15 @@
 # canned-shrimp
 
+## 0.0.5
+
+### Patch Changes
+
+- 0bc06da: The scene life cycle is now a global function
+- a8e0b25: coreStore is now more streamlined
+- 9c372a2: Canned shrimp is now registered through a Vue plugin, rather than a separate function.
+- edd4321: New Methods for Creating Prefabs
+- 0abf7a8: Scene creation now uses lifecycle hooks instead of object assignment.
+
 ## 0.0.4
 
 ### Patch Changes
