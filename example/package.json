@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "canned-shrimp": "^0.0.4",
     "vue": "^3.4.15"
   },
   "devDependencies": {
