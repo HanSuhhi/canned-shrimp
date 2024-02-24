@@ -1,4 +1,4 @@
-import { Button_State, Keyboard, coreStore, defineContainer } from "canned-shrimp";
+import { Button_State, Keyboard, coreStore, defineContainer, definePrefab } from "canned-shrimp";
 import { floor, isEqual } from "lodash-es";
 import { GameChildrenIndex } from "../../scenes/game/game.enum";
 import { createBlockName } from "../../scenes/game/map";
@@ -53,13 +53,13 @@ function useSnakeMove({ contains }: ReturnType<typeof useSnakeMap>, { state, dea
     }
 
     if (targetPosition[0] > GAME_MAP_X_LENGTH - 1 || targetPosition[0] < 0 || targetPosition[1] > GAME_MAP_Y_LENGTH - 1 || targetPosition[1] < 0) {
-      state.value = SnakeState.Dead
-      deadReason.value = "Touched the boundary!"
-      return
+      state.value = SnakeState.Dead;
+      deadReason.value = "Touched the boundary!";
+      return;
     };
     if (contains.some(item => isEqual(targetPosition, item))) {
       state.value = SnakeState.Dead;
-      deadReason.value = "Attacked self!"
+      deadReason.value = "Attacked self!";
       return;
     }
 
@@ -91,16 +91,15 @@ export function defineSnake() {
 
   const { move, stopKeyboard } = useSnakeMove(snakeMap, snakeState);
 
-  const close = () => {
-    stopKeyboard();
-  };
-
-  return Object.assign(snake, {
+  return definePrefab(Object.assign(snake, {
     contains: snakeMap.contains,
     init: snakeMap.init,
     state: snakeState.state,
     deadReason: snakeState.deadReason,
     move,
-    close,
+  }), {
+    close() {
+      stopKeyboard();
+    },
   });
 }

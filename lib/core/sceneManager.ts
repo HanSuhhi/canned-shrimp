@@ -29,7 +29,7 @@ function defineSceneRemover() {
     if (destory) destoryScene(coreStore.scene);
     else removeStateScene(coreStore.scene);
 
-    if (scene.unload) await scene.unload();
+    if (scene.onUnload) await scene.onUnload();
 
     stopOnResizeWatch();
   };
@@ -40,7 +40,7 @@ function defineSceneCreator() {
     const scene = await coreStore.scenes[scene_name]();
     scene_instances[scene_name] = scene;
 
-    if (scene.load) await scene.load();
+    if (scene.onCreated) await scene.onCreated();
 
     return scene;
   };
@@ -71,7 +71,7 @@ export async function switchScene(scene_name: string | number, load_asset = true
 
   coreStore.app!.stage.addChild(currentScene);
 
-  if (currentScene.start) await currentScene.start();
+  if (currentScene.onLoad) await currentScene.onLoad();
 
   return currentScene;
 }

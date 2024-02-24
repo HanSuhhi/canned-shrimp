@@ -15,12 +15,12 @@ const { dialog } = createDiscreteApi(
   },
 );
 
-export default defineScene(Scenes.Game, (scene) => {
+export default defineScene(Scenes.Game, (scene, { onLoad, onCreated }) => {
   let snake: Snake;
   let gold: Gold;
   let map: GameMap;
 
-  scene.load = async () => {
+  onCreated(async () => {
     snake = defineSnake();
     scene.addChildAt(snake, GameChildrenIndex.Snake);
 
@@ -29,9 +29,9 @@ export default defineScene(Scenes.Game, (scene) => {
 
     map = defineGameMap();
     scene.addChildAt(map, GameChildrenIndex.Map);
-  };
+  });
 
-  scene.start = async () => {
+  onLoad(async () => {
     snake.init();
     gold.createNewGold();
 
@@ -54,5 +54,5 @@ export default defineScene(Scenes.Game, (scene) => {
         });
       }
     });
-  };
+  });
 });

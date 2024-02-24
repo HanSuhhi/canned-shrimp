@@ -1,16 +1,50 @@
-import type { Scene } from "./types/scene";
+import { ref } from "vue";
+import type { Scene, SceneModel, SceneSetupLifeCycle } from "./types/scene";
 import { defineContainer } from "@/composables/core";
+import { SceneState } from "@/enum";
 
-function createScene(name: string | number): Scene {
+function createSceneModel(name: string | number): SceneModel {
   const container = defineContainer(name.toString());
 
-  return Object.assign(container, { sceneName: name, index: -1 });
+  return Object.assign(container, {
+    sceneName: name,
+    state: ref(SceneState.Create),
+  });
 }
 
-export function defineScene<T>(name: Parameters<typeof createScene>["0"], sceneSetup: (scene: Scene) => T) {
+function createSceneCycle() {
+  const fns: Function[] = [];
+  const addFn: SceneSetupLifeCycle[keyof SceneSetupLifeCycle] = (fn: Function) => {
+    fns.push(fn);
+  };
+  const run = async () => {
+    for (let index = 0; index < fns.length; index++) {
+      const fn = fns[index];
+      await fn();
+    }
+  };
+  return { addFn, run };
+}
+
+export function defineScene<T>(
+  name: Parameters<typeof createSceneModel>["0"],
+  sceneSetup: (scene: SceneModel, { onCreated, onLoad, onUnload }: SceneSetupLifeCycle) => T,
+) {
   const creator = async () => {
-    const scene = createScene(name);
-    await sceneSetup(scene);
+    const scene: Scene = createSceneModel(name);
+    const { addFn: addCreatedFn, run: runCreated } = createSceneCycle();
+    const { addFn: addLoadedFn, run: runLoaded } = createSceneCycle();
+    const { addFn: addUnloadedFn, run: runUnloaded } = createSceneCycle();
+
+    await sceneSetup(scene, {
+      onCreated: addCreatedFn,
+      onLoad: addLoadedFn,
+      onUnload: addUnloadedFn,
+    });
+
+    scene.onCreated = runCreated;
+    scene.onLoad = runLoaded;
+    scene.onUnload = runUnloaded;
 
     return scene;
   };
