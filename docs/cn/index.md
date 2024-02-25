@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "Canned Shrimp"
+  name: "虾罐头"
   text: "保持轻量，永远欢畅"
   tagline: 一个轻量的网页游戏引擎
   actions:

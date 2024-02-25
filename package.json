@@ -14,8 +14,8 @@
       "import": "./dist/canned-shrimp.js",
       "require": "./dist/canned-shrimp.cjs"
     },
-    "./plugin": {
-      "types": "./dist/plugin.d.ts",
+    "./vite-plugin": {
+      "types": "./dist/vite-plugin.d.ts",
       "import": "./dist/canned-shrimp2.js",
       "require": "./dist/canned-shrimp2.cjs"
     }

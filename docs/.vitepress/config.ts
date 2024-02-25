@@ -1,36 +1,18 @@
 import { defineConfig } from "vitepress";
+import { shared } from "./shared";
+import { zh } from "./cn.config";
 
 export default defineConfig({
-  title: "Canned Shrimp",
-  description: "Keep Lightweight, always be fun",
-  themeConfig: {
-    nav: [
-      { text: "Home", link: "/" },
-      // { text: "Examples", link: "/markdown-examples" },
-    ],
-
-    sidebar: [
-      // {
-      //   text: "Examples",
-      //   items: [
-      //     { text: "Markdown Examples", link: "/markdown-examples" },
-      //     { text: "Runtime API Examples", link: "/api-examples" },
-      //   ],
-      // },
-    ],
-
-    socialLinks: [
-      { icon: "github", link: "https://github.com/HanSuhhi/canned-shrimp" },
-    ],
-  },
+  ...shared,
   locales: {
     root: {
       label: "English",
       lang: "en",
+
     },
     cn: {
       label: "中文",
-      lang: "cn",
+      ...zh,
     },
   },
 });

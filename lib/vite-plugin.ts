@@ -1,13 +1,14 @@
 import type { Plugin } from "vite";
+import { mapKeys } from "lodash-es";
 
-export function cannedShrimp(): Plugin {
+function cannedShrimp(): Plugin {
   return {
     name: "rollup-plugin-vue-canned-shrimp",
     transform(code, id) {
       if (id.includes("src/main")) {
         return {
           code: `import { CoreStore } from "canned-shrimp";
-import { mapKeys } from "lodash-es";
+import { cannedShrimp } from 'canned-shrimp/vite-plugin'
 
 function getFilenameFromPath(path) {
   return path.split("/").pop().split(".").shift() || "";
@@ -17,7 +18,7 @@ function updateFilenameFromViteGlob(_, path) {
   return getFilenameFromPath(path);
 }
 
-CoreStore.instance.scenes = mapKeys(import.meta.glob("/src/scenes/**/*.scene.ts", { eager: true, import: "default" }), updateFilenameFromViteGlob);
+CoreStore.instance.scenes = cannedShrimp.__map_keys__(import.meta.glob("/src/scenes/**/*.scene.ts", { eager: true, import: "default" }), updateFilenameFromViteGlob);
 CoreStore.instance.assetFiles = Object.keys(import.meta.glob(["/public/**/*.*", "!/public/vite.svg", "!/public/bitmap-font/*.*"]));
 ${code}`,
         };
@@ -25,3 +26,7 @@ ${code}`,
     },
   };
 }
+
+Reflect.set(cannedShrimp, "__map_keys__", mapKeys);
+
+export { cannedShrimp };
