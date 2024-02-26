@@ -13,7 +13,7 @@ function createManifest() {
   const assetsManifest: Asset[] = [];
   const assetPathRegexp = /public\/(?<group>[\w.-]+)\/(?<category>[\w.-]+)\/(?<name>[\w.-]+)\.(?<ext>\w+)$/;
 
-  CoreStore.instance.assetFiles.forEach((assetPath) => {
+  (Reflect.get(CoreStore.prototype, "assetFiles") as AssetFiles).forEach((assetPath) => {
     const match = assetPathRegexp.exec(assetPath);
 
     if (!match || !match.groups) {

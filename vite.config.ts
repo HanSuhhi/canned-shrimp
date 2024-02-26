@@ -11,6 +11,7 @@ export default defineConfig({
     copyDtsFiles: true,
     staticImport: true,
     include: ["lib"],
+    exclude: ["lib/core/types/private.d.ts"],
   }), loadVuePlugin],
   resolve: {
     alias: {

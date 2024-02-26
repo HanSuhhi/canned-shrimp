@@ -1,9 +1,9 @@
 import type { Application } from "pixi.js";
 import { SceneLifecycle } from "../enum";
-import type { KeyboardEventKey } from "./types/keyboard";
-import type { Scene, SceneCreator } from "./types/scene";
-import type { SetupOption } from "./types/setup";
 import type { SceneManager } from "./sceneManager";
+import type { KeyboardEventKey } from "./types/keyboard";
+import type { Scene } from "./types/scene";
+import type { SetupOption } from "./types/setup";
 
 class CoreStore {
   private static _instance: CoreStore;
@@ -27,12 +27,6 @@ class CoreStore {
   public get width(): number {
     return this.app?.screen.width || 0;
   }
-
-  // @TODO store scenes and assetFiles are set via vite-plugin. They should not be accessible to developers.
-  // scenes
-  public scenes: Record<string, SceneCreator> = {};
-  // assetfiles
-  public assetFiles: string[] = [];
 }
 
 class LibStore {

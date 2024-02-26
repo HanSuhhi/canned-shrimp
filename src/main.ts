@@ -14,8 +14,8 @@ function updateFilenameFromViteGlob(_: any, path: string): string {
   return getFilenameFromPath(path);
 }
 
-CoreStore.instance.scenes = mapKeys(import.meta.glob<SceneCreator>("/src/scenes/**/*.scene.ts", { eager: true, import: "default" }), updateFilenameFromViteGlob);
-CoreStore.instance.assetFiles = Object.keys(import.meta.glob(["/public/**/*.*", "!/public/vite.svg", "!/public/plugin.ts", "!/public/bitmap-font/*.*"]));
+Reflect.set(CoreStore.prototype, "scenes", mapKeys(import.meta.glob<SceneCreator>("/src/scenes/**/*.scene.ts", { eager: true, import: "default" }), updateFilenameFromViteGlob));
+Reflect.set(CoreStore.prototype, "assetFiles", Object.keys(import.meta.glob(["/public/**/*.*", "!/public/vite.svg", "!/public/plugin.ts", "!/public/bitmap-font/*.*"])));
 
 const cannedShrimp = createCannedShrimp({
   defaultScene: Scenes.Init,
