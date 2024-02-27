@@ -2,19 +2,19 @@
 layout: home
 
 hero:
-  name: "虾罐头"
+  name: "Canned Shrimp"
   text: "保持轻量，永远欢畅"
   tagline: 一个轻量的网页游戏引擎
   actions:
     - theme: brand
       text: 教学关卡 🪙
-      link: /cn/guide
+      link: /cn/guide/
     - theme: alt
       text: 文档说明 📚
-      link: /cn/guide
+      link: /cn/guide/
     - theme: alt
       text: 开始游戏 🎮
-      link: /cn/guide
+      link: /cn/guide/
 
 features:
   - title: pixi.js

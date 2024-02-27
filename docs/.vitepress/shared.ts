@@ -10,5 +10,4 @@ export const shared = defineConfig({
       { icon: "github", link: "https://github.com/HanSuhhi/canned-shrimp" },
     ],
   },
-
 });

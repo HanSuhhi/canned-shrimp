@@ -62,7 +62,7 @@ After installation, you first need to use the provided vite plugin in `vite.conf
 ```js {3,6}
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { cannedShrimp } from "canned-shrimp/plugin";
+import { cannedShrimp } from "canned-shrimp/vite-plugin";
 
 export default defineConfig({
   plugins: [vue(), cannedShrimp()]

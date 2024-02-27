@@ -8,13 +8,13 @@ hero:
   actions:
     - theme: brand
       text: Get Start 🪙
-      link: /guide
+      link: /guide/
     - theme: alt
       text: API Docs 📚
-      link: /guide
+      link: /guide/
     - theme: alt
       text: Examples 🎮
-      link: /guide
+      link: /demo/
 
 features:
   - title: pixi.js

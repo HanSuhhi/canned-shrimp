@@ -1,13 +1,13 @@
 import { defineConfig } from "vitepress";
 
 export const zh = defineConfig({
-  title: "虾罐头",
+  title: "Canned Shrimp",
   lang: "zh-Hans",
   description: "保持轻量，永远欢畅",
   themeConfig: {
     nav: [
-      { text: "教学", link: "/cn/" },
-      // { text: "Examples", link: "/markdown-examples" },
+      { text: "开始", link: "/cn/guide/" },
+      { text: "Demo", link: "/cn/demo/" },
     ],
 
     docFooter: {
@@ -30,18 +30,25 @@ export const zh = defineConfig({
     lightModeSwitchTitle: "切换到浅色模式",
     darkModeSwitchTitle: "切换到深色模式",
 
-    sidebar: [
-      // {
-      //   text: "Examples",
-      //   items: [
-      //     { text: "Markdown Examples", link: "/markdown-examples" },
-      //     { text: "Runtime API Examples", link: "/api-examples" },
-      //   ],
-      // },
-    ],
+    outline: {
+      label: "本页导航",
+    },
 
-    socialLinks: [
-      { icon: "github", link: "https://github.com/HanSuhhi/canned-shrimp" },
-    ],
+    sidebar: {
+      "/cn/guide/": [
+        {
+          text: "简介",
+          collapsed: false,
+          items: [
+            { text: "什么是 Canned Shrimp？", link: "/cn/guide/introduction" },
+            { text: "快速开始", link: "/cn/guide/" },
+          ],
+        },
+      ],
+      "/cn/demo/": [
+        { text: "示例", link: "/cn/demo/" },
+      ],
+    },
+
   },
 });

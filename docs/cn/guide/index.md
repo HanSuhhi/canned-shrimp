@@ -1,3 +1,6 @@
+---
+outline: deep
+---
 # 快速开始
 
 ## 提示
@@ -62,7 +65,7 @@ $ bun add pixi.js
 ```js {3,6}
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { cannedShrimp } from "canned-shrimp/plugin";
+import { cannedShrimp } from "canned-shrimp/vite-plugin";
 
 export default defineConfig({
   plugins: [vue(), cannedShrimp()]
