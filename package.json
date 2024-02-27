@@ -16,14 +16,15 @@
     },
     "./vite-plugin": {
       "types": "./dist/vite-plugin.d.ts",
-      "import": "./dist/canned-shrimp2.js",
-      "require": "./dist/canned-shrimp2.cjs"
+      "import": "./dist/vite-plugin.js",
+      "require": "./dist/vite-plugin.cjs"
     }
   },
   "scripts": {
     "dev": "vite",
     "cz": "git-cz",
-    "build": "vue-tsc && vite build",
+    "build": "vue-tsc && vite build && pnpm build:vite-plugin",
+    "build:vite-plugin": "tsup",
     "types": "esno scripts/types.script.ts",
     "preview": "vite preview",
     "changelog": "pnpm exec changeset",
@@ -32,8 +33,10 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
+    "@antfu/utils": "^0.7.7",
     "@pixi/sound": "^5.2.2",
     "@vueuse/core": "^10.7.2",
+    "fast-glob": "^3.3.2",
     "lodash-es": "^4.17.21",
     "matter-js": "^0.19.0",
     "pixi.js": "^7.4.0",
@@ -50,6 +53,7 @@
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.56.0",
+    "tsup": "^8.0.2",
     "type-fest": "^4.10.2",
     "typescript": "^5.2.2",
     "vite": "^5.1.0",

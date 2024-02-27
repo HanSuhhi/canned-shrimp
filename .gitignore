@@ -30,3 +30,5 @@ docs/.vitepress/cache
 public/**
 !public/plugin.ts
 example/public/**
+
+canned-shrimp.d.ts

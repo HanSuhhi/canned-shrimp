@@ -1,13 +1,11 @@
 import { createCannedShrimp } from "canned-shrimp";
 import { createApp } from "vue";
 import App from "./App.vue";
-import { Scenes } from "./scenes.enum";
+import { SnakeDirection } from "./prefabs/snake/snake.enum";
 import "./style.css";
 import { GAME_MAP_X, GAME_MAP_Y } from "./utils/var";
-import { SnakeDirection } from "./prefabs/snake/snake.enum";
 
 const cannedShrimp = createCannedShrimp({
-  defaultScene: Scenes.Init,
   pixiAppConfig: {
     autoDensity: true,
     resolution: 2,

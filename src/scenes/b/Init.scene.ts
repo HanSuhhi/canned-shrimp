@@ -11,6 +11,6 @@ export default defineScene(Scenes.Init, () => {
   });
 
   onSceneLoaded(() => {
-    switchScene(Scenes.B);
+    switchScene(Scenes.A);
   });
 });

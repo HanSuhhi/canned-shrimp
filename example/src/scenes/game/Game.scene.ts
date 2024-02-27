@@ -2,7 +2,6 @@ import { CoreStore, defineScene, onSceneCreated, onSceneLoaded, switchScene, upd
 import { watch } from "vue";
 import { createDiscreteApi, darkTheme } from "naive-ui";
 import { defineSnake } from "../../prefabs/snake/Snake.prefab";
-import { Scenes } from "../../scenes.enum";
 import { defineGold } from "../../prefabs/gold/Gold.prefab";
 import { SnakeState } from "../../prefabs/snake/snake.state";
 import { GameChildrenIndex } from "./game.enum";
@@ -15,7 +14,7 @@ const { dialog } = createDiscreteApi(
   },
 );
 
-export default defineScene(Scenes.Game, () => {
+export default defineScene(SCENES.Game, () => {
   let snake: Snake;
   let gold: Gold;
   let map: GameMap;
@@ -49,7 +48,7 @@ export default defineScene(Scenes.Game, () => {
           closable: false,
           maskClosable: false,
           onPositiveClick() {
-            switchScene(Scenes.Menu);
+            switchScene(SCENES.Menu);
           },
         });
       }

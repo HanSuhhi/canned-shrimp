@@ -3,8 +3,10 @@ import { env } from "node:process";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import vue from "@vitejs/plugin-vue";
+import { cannedShrimp } from "./lib/vite-plugin";
 
 const loadVuePlugin = env.NODE_ENV === "development" ? vue() : null;
+const loadTestPlugin = env.NODE_ENV === "development" ? cannedShrimp() : null;
 
 export default defineConfig({
   plugins: [dts({
@@ -12,7 +14,7 @@ export default defineConfig({
     staticImport: true,
     include: ["lib"],
     exclude: ["lib/core/types/private.d.ts"],
-  }), loadVuePlugin],
+  }), loadVuePlugin, loadTestPlugin],
   resolve: {
     alias: {
       "@": resolve(__dirname, "lib"),
@@ -21,7 +23,7 @@ export default defineConfig({
   build: {
     outDir: "dist",
     lib: {
-      entry: [resolve(__dirname, "lib", "main.ts"), resolve(__dirname, "lib", "vite-plugin.ts")],
+      entry: resolve(__dirname, "lib", "main.ts"),
       name: "CannedShrimp",
       fileName: "canned-shrimp",
     },

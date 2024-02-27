@@ -35,7 +35,7 @@ export async function defineSceneManager() {
 
   const removeCurrentScene = defineSceneRemover();
   const createScene = async (scene_name: string | number) => {
-    const scene = await (Reflect.get(CoreStore.prototype, "scenes") as Scenes)[scene_name]();
+    const scene = await LibStore.instance.scenes[scene_name]();
     scene_instances[scene_name] = scene;
 
     scene.state.value = SceneState.Created;

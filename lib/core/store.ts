@@ -2,7 +2,7 @@ import type { Application } from "pixi.js";
 import { SceneLifecycle } from "../enum";
 import type { SceneManager } from "./sceneManager";
 import type { KeyboardEventKey } from "./types/keyboard";
-import type { Scene } from "./types/scene";
+import type { Scene, SceneCreator } from "./types/scene";
 import type { SetupOption } from "./types/setup";
 
 class CoreStore {
@@ -47,6 +47,9 @@ class LibStore {
   public set actionKey(value: Record<string, KeyboardEventKey | KeyboardEventKey[]>) {
     this._actionKey = value;
   }
+
+  // scenes
+  public scenes: Record<string, SceneCreator> = {};
 
   // default scene
   public defaultScene: string = "";

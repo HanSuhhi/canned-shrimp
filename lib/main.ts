@@ -7,5 +7,5 @@ export * from "@/core/scene";
 export * from "@/core/sceneManager";
 export * from "@/core/spritesheetAnimation";
 export * from "@/core/vue-plugin";
-export * from "@/core/app";
+export * from "@/core/setup";
 export * from "@/core/prefab";
